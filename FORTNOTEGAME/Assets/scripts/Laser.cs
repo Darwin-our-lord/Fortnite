@@ -43,8 +43,6 @@ public class LaserPointer : MonoBehaviour
 
     public void Toggle() => SetActive(!_isActive);
 
-    public bool IsActive => _isActive;
-
     private void CastLaser()
     {
         var points = new List<Vector3>();
