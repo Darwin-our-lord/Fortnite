@@ -19,8 +19,14 @@ public class LaserPointer : MonoBehaviour
     private LineRenderer _line;
     private bool _isActive;
 
+    [Header("Cat:D")]
+    public CatMovement catMov;
+
+
     private void Awake()
     {
+        catMov = GameObject.FindWithTag("Cat").GetComponent<CatMovement>();
+
         _line = GetComponent<LineRenderer>();
         ConfigureLineRenderer();
         SetActive(startActive);
@@ -76,6 +82,7 @@ public class LaserPointer : MonoBehaviour
             }
             else
             {
+                catMov.SetFollow(info.point);
                 break;
             }
         }

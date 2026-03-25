@@ -6,9 +6,8 @@ public class PlayerController : MonoBehaviour
     public GameObject playerCam;
 
     Rigidbody rb;
-    float moveSpeed = 50;
-    float rotationSpeed = 100;
-
+    float moveSpeed = 500;
+    float rotationSpeed = 1000;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
