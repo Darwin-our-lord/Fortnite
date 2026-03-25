@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 141001458}
   - component: {fileID: 141001457}
   - component: {fileID: 141001460}
+  - component: {fileID: 141001461}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -262,6 +263,28 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &141001461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141001456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b681f608f58174e85c46d268653bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasLaserPointer: 1
+  laserPoint: {fileID: 2136608504}
+  LaserGameOBJ: {fileID: 793267956}
+  laserPrefab: {fileID: 4853966549108714166, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+  rayCastLayerMask:
+    serializedVersion: 2
+    m_Bits: 51
+  collisonLayerMask:
+    serializedVersion: 2
+    m_Bits: 4
 --- !u!1 &515650239
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,7 +421,7 @@ GameObject:
   - component: {fileID: 520824576}
   - component: {fileID: 520824582}
   - component: {fileID: 520824581}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -614,6 +637,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &793267956 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4853966549108714166, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+  m_PrefabInstance: {fileID: 8366472838982324069}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &963760045
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,6 +1771,10 @@ PrefabInstance:
       value: laserPointer
       objectReference: {fileID: 0}
     - target: {fileID: 5658762523177000410, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5658762523177000410, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1781,6 +1813,50 @@ PrefabInstance:
     - target: {fileID: 5658762523177000410, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5661835875317328210, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: m_fontSize
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5661835875317328210, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5661835875317328210, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5661835875317328210, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 5661835875317328210, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6216725085002151672, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6216725085002151672, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6216725085002151672, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228886914518862704, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228886914518862704, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031826317453023796, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
