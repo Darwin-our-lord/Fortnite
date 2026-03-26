@@ -4,11 +4,13 @@ public class PlayerController : MonoBehaviour
 {
 
     public GameObject playerCam;
+    [SerializeField] LayerMask layerMask;
+
 
     Rigidbody rb;
     float moveSpeed = 10;
     float rotationSpeed = 10;
-
+    float jumpHeight = 5;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,12 +27,14 @@ public class PlayerController : MonoBehaviour
 
         Vector3 dir = transform.forward * vertical + transform.right * horizontal;
 
-        dir = dir * moveSpeed;
+        rb.linearVelocity = new Vector3(dir.x*moveSpeed,rb.linearVelocity.y,dir.z*moveSpeed);
 
-        dir.y = rb.linearVelocity.y;
-
-        rb.linearVelocity = dir;
-
+        //jump
+        if (Input.GetKey(KeyCode.Space))
+        {
+            bool ray = Physics.Raycast(gameObject.transform.position,  Vector3.down, out RaycastHit hit, 1.1f, layerMask);
+            if(ray) GetComponent<Rigidbody>().AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Impulse);
+        }
 
         //camera
         float rotationVer = -Input.GetAxis("Mouse Y") * rotationSpeed;
