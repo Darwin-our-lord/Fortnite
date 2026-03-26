@@ -26,7 +26,7 @@ public class CatMovement : MonoBehaviour
 
         if(Vector3.Distance(player.transform.position, this.gameObject.transform.position) < 5)
         {
-            if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) < 0.3f)
+            if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) < 1.1f)
             {
                 Destroy(player.gameObject);
             }
