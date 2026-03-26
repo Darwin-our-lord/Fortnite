@@ -6,8 +6,8 @@ public class PlayerController : MonoBehaviour
     public GameObject playerCam;
 
     Rigidbody rb;
-    float moveSpeed = 500;
-    float rotationSpeed = 1000;
+    float moveSpeed = 10;
+    float rotationSpeed = 10;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //move
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -25,12 +25,16 @@ public class PlayerController : MonoBehaviour
 
         Vector3 dir = transform.forward * vertical + transform.right * horizontal;
 
-        rb.linearVelocity = dir * moveSpeed * Time.deltaTime;
+        dir = dir * moveSpeed;
+
+        dir.y = rb.linearVelocity.y;
+
+        rb.linearVelocity = dir;
 
 
         //camera
-        float rotationVer = -Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
-        float rotationHor = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+        float rotationVer = -Input.GetAxis("Mouse Y") * rotationSpeed;
+        float rotationHor = Input.GetAxis("Mouse X") * rotationSpeed;
 
         transform.Rotate(0, rotationHor,0);
         playerCam.transform.Rotate(rotationVer, 0, 0);
