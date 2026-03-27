@@ -5,6 +5,11 @@ using UnityEngine.AI;
 
 public class CatMovement : MonoBehaviour
 {
+    [SerializeField]
+    float viewConeSize = 0.8f;
+
+    float detectPlayerRange = 7;
+
     NavMeshAgent agent;
     public Vector3? follow;
 
@@ -23,26 +28,37 @@ public class CatMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
+        float distance = Vector3.Distance(player.transform.position, transform.position);
 
-        if(Vector3.Distance(player.transform.position, this.gameObject.transform.position) < 5)
+        if (distance <= detectPlayerRange)
         {
-            if (Vector3.Distance(player.transform.position, this.gameObject.transform.position) < 1.1f)
-            {
-                Destroy(player.gameObject);
-            }
+            Debug.LogWarning((transform.forward - dirToPlayer).magnitude);
 
-            bool hit = Physics.Raycast(gameObject.transform.position, -(gameObject.transform.position- player.transform.position).normalized, out RaycastHit ray, 5, mask);
-
-            if (hit)
+            if ((transform.forward-dirToPlayer).magnitude > viewConeSize)
             {
-                if (ray.collider.gameObject.CompareTag("Player"))
+
+                if (Physics.Raycast(transform.position, dirToPlayer, out RaycastHit ray, detectPlayerRange + 1, mask))
                 {
-                    agent.SetDestination(player.transform.position);
-                    return;
+                    Debug.Log(ray.collider.name);
+
+                    if (ray.collider.CompareTag("Player"))
+                    {
+                        agent.SetDestination(player.transform.position);
+                    }
+                    else if (follow != null)
+                    {
+                        agent.SetDestination(follow.Value);
+                    }
+                }
+                else 
+                {
+                    Debug.LogError("fuck you");
+
                 }
             }
         }
-        if(follow != null)
+        else if (follow != null)
         {
             agent.SetDestination(follow.Value);
         }
