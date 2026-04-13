@@ -17,12 +17,16 @@ public class CatMovement : MonoBehaviour
 
     GameObject player;
 
+    Animator animator;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
 
         player = GameObject.FindWithTag("Player");
+
+        animator = transform.GetChild(0).GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -33,15 +37,10 @@ public class CatMovement : MonoBehaviour
 
         if (distance <= detectPlayerRange)
         {
-            Debug.LogWarning((transform.forward - dirToPlayer).magnitude);
-
-            if ((transform.forward-dirToPlayer).magnitude > viewConeSize)
+            if ((transform.forward-dirToPlayer).magnitude < viewConeSize)
             {
-
                 if (Physics.Raycast(transform.position, dirToPlayer, out RaycastHit ray, detectPlayerRange + 1, mask))
                 {
-                    Debug.Log(ray.collider.name);
-
                     if (ray.collider.CompareTag("Player"))
                     {
                         agent.SetDestination(player.transform.position);
@@ -50,11 +49,6 @@ public class CatMovement : MonoBehaviour
                     {
                         agent.SetDestination(follow.Value);
                     }
-                }
-                else 
-                {
-                    Debug.LogError("fuck you");
-
                 }
             }
         }
@@ -68,7 +62,12 @@ public class CatMovement : MonoBehaviour
     {
         if(Vector3.Distance(vetor.Value, transform.position) < 1.5)
         {
+            animator.SetBool("Walking", false);
             return;
+        }
+        else
+        {
+            animator.SetBool("Walking", true);
         }
         follow = vetor;
     }

@@ -19,6 +19,8 @@ public class LaserPointer : MonoBehaviour
     private LineRenderer _line;
     private bool _isActive;
 
+    private bool turnedON = false;
+
     [Header("Cat:D")]
     public CatMovement catMov;
 
@@ -34,7 +36,8 @@ public class LaserPointer : MonoBehaviour
 
     private void Update()
     {
-        if (_isActive)
+        if (Input.GetMouseButtonDown(0)) turnedON = !turnedON;
+        if (_isActive && turnedON)
             CastLaser();
         else
             _line.enabled = false;
