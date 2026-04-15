@@ -4326,6 +4326,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2136608505}
     m_Modifications:
+    - target: {fileID: 690077171918342801, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: InitialModule.size3D
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 690077171918342801, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 690077171918342801, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 690077171918342801, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 690077171918342801, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 690077171918342801, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 690077171918342801, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
+      propertyPath: InitialModule.startSizeZ.scalar
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 1710903989244430207, guid: a427159099ce48b419efe2fac30cb1e8, type: 3}
       propertyPath: m_Camera
       value: 

@@ -38,25 +38,28 @@ public class CatMovement : MonoBehaviour
     {
         Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
         float distance = Vector3.Distance(player.transform.position, transform.position);
-        if (distance <= innerDetectPlayerRange)
+        if (transform.position.y+1 >= player.transform.position.y)
         {
-            animator.SetBool("Walking", true);
-            agent.SetDestination(player.transform.position);
-            chasingPlayer = true;
-            return;
-        }
-        else if (distance <= detectPlayerRange)
-        {
-            if ((transform.forward - dirToPlayer).magnitude < viewConeSize)
+            if (distance <= innerDetectPlayerRange)
             {
-                if (Physics.Raycast(transform.position, dirToPlayer, out RaycastHit ray, detectPlayerRange + 1, mask))
+                animator.SetBool("Walking", true);
+                agent.SetDestination(player.transform.position);
+                chasingPlayer = true;
+                return;
+            }
+            else if (distance <= detectPlayerRange)
+            {
+                if ((transform.forward - dirToPlayer).magnitude < viewConeSize)
                 {
-                    if (ray.collider.CompareTag("Player"))
+                    if (Physics.Raycast(transform.position, dirToPlayer, out RaycastHit ray, detectPlayerRange + 1, mask))
                     {
-                        animator.SetBool("Walking", true);
-                        agent.SetDestination(player.transform.position);
-                        chasingPlayer = true;
-                        return;
+                        if (ray.collider.CompareTag("Player"))
+                        {
+                            animator.SetBool("Walking", true);
+                            agent.SetDestination(player.transform.position);
+                            chasingPlayer = true;
+                            return;
+                        }
                     }
                 }
             }

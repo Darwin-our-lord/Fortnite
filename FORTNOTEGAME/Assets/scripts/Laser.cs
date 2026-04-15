@@ -72,6 +72,7 @@ public class LaserPointer : MonoBehaviour
             if (!hit)
             {
                 points.Add(origin + direction * remaining);
+                particle.SetActive(false);
                 break;
             }
 
@@ -89,6 +90,7 @@ public class LaserPointer : MonoBehaviour
             {
                 catMov.SetFollow(info.point);
                 particle.transform.position = info.point;
+                particle.SetActive(true);
                 break;
             }
         }
