@@ -38,10 +38,16 @@ public class CatMovement : MonoBehaviour
     {
         Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
         float distance = Vector3.Distance(player.transform.position, transform.position);
-
-        if (distance <= detectPlayerRange)
+        if (distance <= innerDetectPlayerRange)
         {
-            if ((transform.forward-dirToPlayer).magnitude < viewConeSize)
+            animator.SetBool("Walking", true);
+            agent.SetDestination(player.transform.position);
+            chasingPlayer = true;
+            return;
+        }
+        else if (distance <= detectPlayerRange)
+        {
+            if ((transform.forward - dirToPlayer).magnitude < viewConeSize)
             {
                 if (Physics.Raycast(transform.position, dirToPlayer, out RaycastHit ray, detectPlayerRange + 1, mask))
                 {
@@ -55,13 +61,7 @@ public class CatMovement : MonoBehaviour
                 }
             }
         }
-        else if(distance <= innerDetectPlayerRange)
-        {
-            animator.SetBool("Walking", true);
-            agent.SetDestination(player.transform.position);
-            chasingPlayer = true;
-            return;
-        }
+
         chasingPlayer = false;
 
         if (follow != null && !chasingPlayer)

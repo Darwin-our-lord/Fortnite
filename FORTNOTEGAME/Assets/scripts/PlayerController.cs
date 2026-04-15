@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject deathUI;
 
     Rigidbody rb;
-    float moveSpeed = 10;
+    float moveSpeed = 7;
     float rotationSpeed = 10;
     float jumpHeight = 0.5f;
 

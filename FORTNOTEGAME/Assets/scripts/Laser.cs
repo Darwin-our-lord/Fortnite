@@ -6,6 +6,7 @@ public class LaserPointer : MonoBehaviour
     public Color laserColor = Color.red;
     public float laserWidth = 0.02f;
     public Material laserMaterial;
+    public GameObject particle;
 
     [Header("Beam behaviour")]
     public int maxReflections = 8;
@@ -36,11 +37,14 @@ public class LaserPointer : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0)) { turnedON = !turnedON;  catMov.StopChaseLaser(); }
+        if (Input.GetMouseButtonDown(0)) { turnedON = !turnedON; particle.SetActive(turnedON); catMov.StopChaseLaser(); }
+
         if (_isActive && turnedON)
             CastLaser();
+        
         else
             _line.enabled = false;
+       
     }
 
     public void SetActive(bool active)
@@ -84,6 +88,7 @@ public class LaserPointer : MonoBehaviour
             else
             {
                 catMov.SetFollow(info.point);
+                particle.transform.position = info.point;
                 break;
             }
         }
