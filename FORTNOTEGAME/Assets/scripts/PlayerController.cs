@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
 
     public GameObject playerCam;
     [SerializeField] LayerMask layerMask;
-
+    [SerializeField] GameObject deathUI;
 
     Rigidbody rb;
     float moveSpeed = 10;
@@ -18,6 +19,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -50,5 +54,10 @@ public class PlayerController : MonoBehaviour
         playerCam.transform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
 
 
+    }
+
+    public void Die() 
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
