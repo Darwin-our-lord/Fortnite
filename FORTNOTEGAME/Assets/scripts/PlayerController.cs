@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     float moveSpeed = 10;
     float rotationSpeed = 10;
-    float jumpHeight = 5;
+    float jumpHeight = 0.5f;
 
     float pitch = 0f;
 
