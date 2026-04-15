@@ -2,13 +2,14 @@ using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
 
 public class CatMovement : MonoBehaviour
 {
     [SerializeField]
-    float viewConeSize = 0.8f;
+    float viewConeSize = 1f;
 
-    float detectPlayerRange = 7;
+    float detectPlayerRange = 17;
 
     NavMeshAgent agent;
     public Vector3? follow;
@@ -46,15 +47,29 @@ public class CatMovement : MonoBehaviour
                     if (ray.collider.CompareTag("Player"))
                     {
                         agent.SetDestination(player.transform.position);
+                        chasingPlayer = true;
                     }
-                    else if (follow != null)
+                    else
                     {
-                        agent.SetDestination(follow.Value);
+                        chasingPlayer = false;
                     }
                 }
+                else
+                {
+                    chasingPlayer = false;
+                }
+            }
+            else
+            {
+                chasingPlayer = false;
             }
         }
-        else if (follow != null)
+        else
+        {
+            chasingPlayer = false;
+        }
+
+        if (follow != null && !chasingPlayer)
         {
             agent.SetDestination(follow.Value);
         }
@@ -62,6 +77,8 @@ public class CatMovement : MonoBehaviour
 
     public void SetFollow(Vector3? vetor)
     {
+        if (chasingPlayer) return;
+
         if(Vector3.Distance(vetor.Value, transform.position) < 1.5)
         {
             animator.SetBool("Walking", false);
@@ -76,7 +93,11 @@ public class CatMovement : MonoBehaviour
 
     public void StopChaseLaser()
     {
+        if (chasingPlayer) return;
+        follow = null;
+        agent.SetDestination(transform.position);
 
+        animator.SetBool("Walking", false);
     }
 
     public void OnCollisionEnter(Collision collision)

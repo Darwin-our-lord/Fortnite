@@ -36,7 +36,7 @@ public class LaserPointer : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0)) turnedON = !turnedON;
+        if (Input.GetMouseButtonDown(0)) { turnedON = !turnedON;  catMov.StopChaseLaser(); }
         if (_isActive && turnedON)
             CastLaser();
         else
@@ -49,8 +49,6 @@ public class LaserPointer : MonoBehaviour
         if (!active)
             _line.enabled = false;
     }
-
-    public void Toggle() => SetActive(!_isActive);
 
     private void CastLaser()
     {
