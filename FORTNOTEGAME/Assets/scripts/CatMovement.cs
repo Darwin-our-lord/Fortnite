@@ -10,6 +10,7 @@ public class CatMovement : MonoBehaviour
     float viewConeSize = 1f;
 
     float detectPlayerRange = 17;
+    float innerDetectPlayerRange = 5;
 
     NavMeshAgent agent;
     public Vector3? follow;
@@ -46,28 +47,22 @@ public class CatMovement : MonoBehaviour
                 {
                     if (ray.collider.CompareTag("Player"))
                     {
+                        animator.SetBool("Walking", true);
                         agent.SetDestination(player.transform.position);
                         chasingPlayer = true;
-                    }
-                    else
-                    {
-                        chasingPlayer = false;
+                        return;
                     }
                 }
-                else
-                {
-                    chasingPlayer = false;
-                }
-            }
-            else
-            {
-                chasingPlayer = false;
             }
         }
-        else
+        else if(distance <= innerDetectPlayerRange)
         {
-            chasingPlayer = false;
+            animator.SetBool("Walking", true);
+            agent.SetDestination(player.transform.position);
+            chasingPlayer = true;
+            return;
         }
+        chasingPlayer = false;
 
         if (follow != null && !chasingPlayer)
         {
