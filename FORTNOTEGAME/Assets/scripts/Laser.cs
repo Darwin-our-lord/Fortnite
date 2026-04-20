@@ -6,6 +6,7 @@ public class LaserPointer : MonoBehaviour
     public Color laserColor = Color.red;
     public float laserWidth = 0.02f;
     public Material laserMaterial;
+    public GameObject particle;
 
     [Header("Beam behaviour")]
     public int maxReflections = 8;
@@ -18,6 +19,8 @@ public class LaserPointer : MonoBehaviour
 
     private LineRenderer _line;
     private bool _isActive;
+
+    private bool turnedON = false;
 
     [Header("Cat:D")]
     public CatMovement catMov;
@@ -34,10 +37,14 @@ public class LaserPointer : MonoBehaviour
 
     private void Update()
     {
-        if (_isActive)
+        if (Input.GetMouseButtonDown(0)) { turnedON = !turnedON; particle.SetActive(turnedON); catMov.StopChaseLaser(); }
+
+        if (_isActive && turnedON)
             CastLaser();
+        
         else
             _line.enabled = false;
+       
     }
 
     public void SetActive(bool active)
@@ -46,8 +53,6 @@ public class LaserPointer : MonoBehaviour
         if (!active)
             _line.enabled = false;
     }
-
-    public void Toggle() => SetActive(!_isActive);
 
     private void CastLaser()
     {
@@ -67,6 +72,7 @@ public class LaserPointer : MonoBehaviour
             if (!hit)
             {
                 points.Add(origin + direction * remaining);
+                particle.SetActive(false);
                 break;
             }
 
@@ -83,6 +89,8 @@ public class LaserPointer : MonoBehaviour
             else
             {
                 catMov.SetFollow(info.point);
+                particle.transform.position = info.point;
+                particle.SetActive(true);
                 break;
             }
         }

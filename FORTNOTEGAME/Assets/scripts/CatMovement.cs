@@ -2,13 +2,15 @@ using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
 
 public class CatMovement : MonoBehaviour
 {
     [SerializeField]
-    float viewConeSize = 0.8f;
+    float viewConeSize = 1f;
 
-    float detectPlayerRange = 7;
+    float detectPlayerRange = 17;
+    float innerDetectPlayerRange = 5;
 
     NavMeshAgent agent;
     public Vector3? follow;
@@ -17,12 +19,18 @@ public class CatMovement : MonoBehaviour
 
     GameObject player;
 
+    Animator animator;
+
+    bool chasingPlayer = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
 
         player = GameObject.FindWithTag("Player");
+
+        animator = transform.GetChild(0).GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -30,35 +38,36 @@ public class CatMovement : MonoBehaviour
     {
         Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
         float distance = Vector3.Distance(player.transform.position, transform.position);
-
-        if (distance <= detectPlayerRange)
+        if (transform.position.y+1 >= player.transform.position.y)
         {
-            Debug.LogWarning((transform.forward - dirToPlayer).magnitude);
-
-            if ((transform.forward-dirToPlayer).magnitude > viewConeSize)
+            if (distance <= innerDetectPlayerRange)
             {
-
-                if (Physics.Raycast(transform.position, dirToPlayer, out RaycastHit ray, detectPlayerRange + 1, mask))
+                animator.SetBool("Walking", true);
+                agent.SetDestination(player.transform.position);
+                chasingPlayer = true;
+                return;
+            }
+            else if (distance <= detectPlayerRange)
+            {
+                if ((transform.forward - dirToPlayer).magnitude < viewConeSize)
                 {
-                    Debug.Log(ray.collider.name);
-
-                    if (ray.collider.CompareTag("Player"))
+                    if (Physics.Raycast(transform.position, dirToPlayer, out RaycastHit ray, detectPlayerRange + 1, mask))
                     {
-                        agent.SetDestination(player.transform.position);
+                        if (ray.collider.CompareTag("Player"))
+                        {
+                            animator.SetBool("Walking", true);
+                            agent.SetDestination(player.transform.position);
+                            chasingPlayer = true;
+                            return;
+                        }
                     }
-                    else if (follow != null)
-                    {
-                        agent.SetDestination(follow.Value);
-                    }
-                }
-                else 
-                {
-                    Debug.LogError("fuck you");
-
                 }
             }
         }
-        else if (follow != null)
+
+        chasingPlayer = false;
+
+        if (follow != null && !chasingPlayer)
         {
             agent.SetDestination(follow.Value);
         }
@@ -66,10 +75,31 @@ public class CatMovement : MonoBehaviour
 
     public void SetFollow(Vector3? vetor)
     {
+        if (chasingPlayer) return;
+
         if(Vector3.Distance(vetor.Value, transform.position) < 1.5)
         {
+            animator.SetBool("Walking", false);
             return;
         }
+        else
+        {
+            animator.SetBool("Walking", true);
+        }
         follow = vetor;
+    }
+
+    public void StopChaseLaser()
+    {
+        if (chasingPlayer) return;
+        follow = null;
+        agent.SetDestination(transform.position);
+
+        animator.SetBool("Walking", false);
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player")) collision.collider.GetComponent<PlayerController>().Die();
     }
 }

@@ -1,21 +1,27 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
 
     public GameObject playerCam;
     [SerializeField] LayerMask layerMask;
-
+    [SerializeField] GameObject deathUI;
 
     Rigidbody rb;
-    float moveSpeed = 10;
+    float moveSpeed = 7;
     float rotationSpeed = 10;
-    float jumpHeight = 5;
+    float jumpHeight = 0.5f;
+
+    float pitch = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -37,11 +43,21 @@ public class PlayerController : MonoBehaviour
         }
 
         //camera
-        float rotationVer = -Input.GetAxis("Mouse Y") * rotationSpeed;
+        float rotationVer = Input.GetAxis("Mouse Y") * rotationSpeed;
         float rotationHor = Input.GetAxis("Mouse X") * rotationSpeed;
 
-        transform.Rotate(0, rotationHor,0);
-        playerCam.transform.Rotate(rotationVer, 0, 0);
+        transform.Rotate(0, rotationHor, 0);
 
+        pitch -= rotationVer;
+        pitch = Mathf.Clamp(pitch, -80f, 90f);
+
+        playerCam.transform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+
+
+    }
+
+    public void Die() 
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
