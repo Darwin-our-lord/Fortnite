@@ -9,8 +9,14 @@ public class CatMovement : MonoBehaviour
     [SerializeField]
     float viewConeSize = 1f;
 
+    [SerializeField]
+    float chaseSpeed = 5.5f;
+    [SerializeField]
+    float walkSpeed = 3.5f;
+
     float detectPlayerRange = 17;
-    float innerDetectPlayerRange = 5;
+    float innerDetectPlayerRange = 7.5f;
+
 
     NavMeshAgent agent;
     public Vector3? follow;
@@ -42,8 +48,11 @@ public class CatMovement : MonoBehaviour
         {
             if (distance <= innerDetectPlayerRange)
             {
-                animator.SetBool("Walking", true);
+                animator.SetBool("Walking", false);
+                animator.SetBool("Chasing", true);
                 agent.SetDestination(player.transform.position);
+                agent.speed = chaseSpeed;
+
                 chasingPlayer = true;
                 return;
             }
@@ -55,8 +64,11 @@ public class CatMovement : MonoBehaviour
                     {
                         if (ray.collider.CompareTag("Player"))
                         {
-                            animator.SetBool("Walking", true);
+                            animator.SetBool("Walking", false);
+                            animator.SetBool("Chasing", true);
+                            agent.speed = chaseSpeed;
                             agent.SetDestination(player.transform.position);
+
                             chasingPlayer = true;
                             return;
                         }
@@ -70,6 +82,7 @@ public class CatMovement : MonoBehaviour
         if (follow != null && !chasingPlayer)
         {
             agent.SetDestination(follow.Value);
+            agent.speed = walkSpeed;
         }
     }
 
@@ -80,11 +93,14 @@ public class CatMovement : MonoBehaviour
         if(Vector3.Distance(vetor.Value, transform.position) < 1.5)
         {
             animator.SetBool("Walking", false);
+            animator.SetBool("Chasing", false);
+            agent.speed = walkSpeed;
             return;
         }
         else
         {
             animator.SetBool("Walking", true);
+            agent.speed = walkSpeed;
         }
         follow = vetor;
     }
@@ -93,7 +109,8 @@ public class CatMovement : MonoBehaviour
     {
         if (chasingPlayer) return;
         follow = null;
-        agent.SetDestination(transform.position);
+        //agent.SetDestination(transform.position);
+        agent.ResetPath();
 
         animator.SetBool("Walking", false);
     }
