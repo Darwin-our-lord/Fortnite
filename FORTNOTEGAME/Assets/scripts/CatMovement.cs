@@ -77,13 +77,20 @@ public class CatMovement : MonoBehaviour
             }
         }
 
+        if (chasingPlayer == true) 
+        { 
+            agent.ResetPath(); 
+            animator.SetBool("Walking", false);
+            animator.SetBool("Chasing", false);
+        }
         chasingPlayer = false;
 
-        if (follow != null && !chasingPlayer)
+        /*if (follow != null && !chasingPlayer)
         {
-            agent.SetDestination(follow.Value);
+            animator.SetBool("Walking", true);
+            animator.SetBool("Chasing", false);
             agent.speed = walkSpeed;
-        }
+        }*/
     }
 
     public void SetFollow(Vector3? vetor)
@@ -100,9 +107,11 @@ public class CatMovement : MonoBehaviour
         else
         {
             animator.SetBool("Walking", true);
+            animator.SetBool("Chasing", false);
             agent.speed = walkSpeed;
         }
         follow = vetor;
+        agent.SetDestination(follow.Value);
     }
 
     public void StopChaseLaser()
