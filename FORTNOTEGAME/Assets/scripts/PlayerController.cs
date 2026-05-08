@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject playerCam;
     [SerializeField] LayerMask layerMask;
-    [SerializeField] GameObject deathUI;
+    //[SerializeField] GameObject deathUI;
 
     Rigidbody rb;
     float moveSpeed = 7;
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         //jump
         if (Input.GetKey(KeyCode.Space))
         {
-            bool ray = Physics.Raycast(gameObject.transform.position,  Vector3.down, out RaycastHit hit, 1.1f, layerMask);
+            bool ray = Physics.Raycast(gameObject.transform.position,  Vector3.down, out RaycastHit hit, 1.2f, layerMask);
             if(ray) GetComponent<Rigidbody>().AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Impulse);
         }
 
