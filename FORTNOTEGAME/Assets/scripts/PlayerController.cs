@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
 
         Vector3 dir = transform.forward * vertical + transform.right * horizontal;
 
+        dir=dir.normalized;
+
         rb.linearVelocity = new Vector3(dir.x*moveSpeed,rb.linearVelocity.y,dir.z*moveSpeed);
 
         //jump
