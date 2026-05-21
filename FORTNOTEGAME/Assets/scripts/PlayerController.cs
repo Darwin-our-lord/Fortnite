@@ -3,8 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] GameObject playerCamPoint;
 
-    public GameObject playerCam;
+    [SerializeField] GameObject playerCamOBJ;
+
+    [SerializeField] GameObject playerLazerPoint;
+
+    [SerializeField] Animator animator;
+    [SerializeField] LayerMask camLayerMask;
     [SerializeField] LayerMask layerMask;
     //[SerializeField] GameObject deathUI;
 
@@ -37,11 +43,14 @@ public class PlayerController : MonoBehaviour
 
         rb.linearVelocity = new Vector3(dir.x*moveSpeed,rb.linearVelocity.y,dir.z*moveSpeed);
 
+        if (dir != Vector3.zero) animator.SetBool("Walking", true);
+        else animator.SetBool("Walking", false);
+
         //jump
         if (Input.GetKey(KeyCode.Space))
         {
-            bool ray = Physics.Raycast(gameObject.transform.position,  Vector3.down, out RaycastHit hit, 1.2f, layerMask);
-            if(ray) GetComponent<Rigidbody>().AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Impulse);
+            bool ray = Physics.Raycast(gameObject.transform.position, Vector3.down, out RaycastHit hit, 1.2f, layerMask);
+            if (ray) GetComponent<Rigidbody>().AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Impulse);
         }
 
         //camera
@@ -53,7 +62,13 @@ public class PlayerController : MonoBehaviour
         pitch -= rotationVer;
         pitch = Mathf.Clamp(pitch, -80f, 90f);
 
-        playerCam.transform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+        playerCamPoint.transform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+        playerLazerPoint.transform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+
+        bool camHit = Physics.Raycast(playerCamPoint.transform.position, -playerCamPoint.transform.forward, out RaycastHit rayInfo, 4, camLayerMask);
+
+        if (camHit) playerCamOBJ.transform.localPosition = new Vector3(0, 1, -rayInfo.distance+0.5f);
+        else playerCamOBJ.transform.localPosition = new Vector3(0, 1, -4);
 
 
     }

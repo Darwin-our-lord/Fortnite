@@ -1,9 +1,8 @@
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class laserPickupThrow : MonoBehaviour
 {
-    public bool hasLaserPointer = true;
+    /*public bool hasLaserPointer = true;
 
     public GameObject laserPoint;
     public GameObject LaserGameOBJ;
@@ -49,5 +48,5 @@ public class laserPickupThrow : MonoBehaviour
                 LaserGameOBJ.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
-    }
+    }*/
 }

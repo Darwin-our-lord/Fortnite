@@ -6,7 +6,7 @@ public class MenuManager : MonoBehaviour
 
     public void PlayButton()
     {
-        SceneManager.SetActiveScene(SceneManager.GetSceneAt(1));
+        SceneManager.LoadScene(1);
     }
     public void QuitButton()
     {
