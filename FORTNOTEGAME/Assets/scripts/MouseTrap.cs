@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public class MouseTrap : MonoBehaviour
 {
     [SerializeField]
@@ -25,8 +25,24 @@ public class MouseTrap : MonoBehaviour
             triggered = true;
             animator.SetTrigger("trigger");
 
-            collision.gameObject.GetComponent<PlayerController>().Die();
+            QuestOverlays questOverlays = GameObject.Find("QuestUI").GetComponent<QuestOverlays>();
+            questOverlays.AnimateOverlay("YouDiedTrap");
+
+            PlayerController player = collision.collider.GetComponent<PlayerController>();
+
+            if (player != null)
+            {
+                StartCoroutine(WaitAndDie(player));
+            }
         }
     }
+    IEnumerator WaitAndDie(PlayerController player)
+    {
+        yield return new WaitForSecondsRealtime(2);
 
+        if (player != null)
+        {
+            player.Die();
+        }
+    }
 }

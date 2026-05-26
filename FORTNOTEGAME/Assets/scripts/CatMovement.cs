@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Net;
 using System.Threading;
 using Unity.VisualScripting;
@@ -127,7 +128,29 @@ public class CatMovement : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        QuestOverlays questOverlays = GameObject.Find("QuestUI").GetComponent<QuestOverlays>();
-        if (collision.collider.CompareTag("Player")) { questOverlays.AnimateOverlay("YouDiedCat"); Thread.Sleep(2000); collision.collider.GetComponent<PlayerController>().Die(); }
+        
+        if (collision.collider.CompareTag("Player")) 
+        { 
+            QuestOverlays questOverlays = GameObject.Find("QuestUI").GetComponent<QuestOverlays>(); 
+            questOverlays.AnimateOverlay("YouDiedCat");
+
+            PlayerController player = collision.collider.GetComponent<PlayerController>();
+
+            if (player != null)
+            {
+                StartCoroutine(WaitAndDie(player));
+            }
+        }
     }
+
+    IEnumerator WaitAndDie(PlayerController player)
+    {
+        yield return new WaitForSecondsRealtime(2);
+
+        if (player != null)
+        {
+            player.Die();
+        }
+    }
+
 }
