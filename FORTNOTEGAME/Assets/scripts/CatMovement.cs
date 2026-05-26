@@ -48,7 +48,7 @@ public class CatMovement : MonoBehaviour
         float distance = Vector3.Distance(player.transform.position, transform.position);
         if (transform.position.y+1 >= player.transform.position.y)
         {
-            if (distance <= innerDetectPlayerRange)
+            if (distance <= innerDetectPlayerRange || Cheese.gotCheese)
             {
                 animator.SetBool("Walking", false);
                 animator.SetBool("Chasing", true);
