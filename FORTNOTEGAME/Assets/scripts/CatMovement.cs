@@ -46,7 +46,7 @@ public class CatMovement : MonoBehaviour
     {
         Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
         float distance = Vector3.Distance(player.transform.position, transform.position);
-        if (transform.position.y+1 >= player.transform.position.y)
+        if (transform.position.y+1 >= player.transform.position.y || Cheese.gotCheese)
         {
             if (distance <= innerDetectPlayerRange || Cheese.gotCheese)
             {
@@ -99,7 +99,13 @@ public class CatMovement : MonoBehaviour
     {
         if (chasingPlayer) return;
 
-        if(Vector3.Distance(vetor.Value, transform.position) < 1.5)
+        float distance = Vector3.Distance(vetor.Value, transform.position);
+        bool hit = Physics.Raycast(transform.position, (vetor.Value - transform.position).normalized, out RaycastHit ray, distance-0.5f, mask);
+        //Debug.Log(ray.transform.gameObject.name);
+        
+        if (hit) return;
+
+        if(distance < 1.5)
         {
             animator.SetBool("Walking", false);
             animator.SetBool("Chasing", false);

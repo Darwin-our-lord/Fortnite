@@ -11,7 +11,7 @@ public class Cheese : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
 
-            collision.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(50,5,0),ForceMode.Impulse);
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(500,20,0),ForceMode.Impulse);
 
             QuestOverlays questOverlays = GameObject.Find("QuestUI").GetComponent<QuestOverlays>();
             questOverlays.AnimateOverlay("GetOut");

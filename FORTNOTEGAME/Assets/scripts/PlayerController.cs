@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
         bool camHit = Physics.Raycast(playerCamPoint.transform.position, -playerCamPoint.transform.forward, out RaycastHit rayInfo, 4, camLayerMask);
 
-        if (camHit) playerCamOBJ.transform.localPosition = new Vector3(0, 1, -rayInfo.distance+0.5f);
+        if (camHit) playerCamOBJ.transform.localPosition = new Vector3(0, 1, -rayInfo.distance+0.7f);
         else playerCamOBJ.transform.localPosition = new Vector3(0, 1, -4);
 
 
