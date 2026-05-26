@@ -1,4 +1,5 @@
 using System.Net;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -126,6 +127,7 @@ public class CatMovement : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Player")) collision.collider.GetComponent<PlayerController>().Die();
+        QuestOverlays questOverlays = GameObject.Find("QuestUI").GetComponent<QuestOverlays>();
+        if (collision.collider.CompareTag("Player")) { questOverlays.AnimateOverlay("YouDiedCat"); Thread.Sleep(2000); collision.collider.GetComponent<PlayerController>().Die(); }
     }
 }
