@@ -33,7 +33,7 @@ public class PressurePlate : MonoBehaviour
                 
         }
     }
-    private void OnTriggerExit(Collider other)
+    /*private void OnTriggerExit(Collider other)
     {
         Debug.Log(other.name);
         if (other.CompareTag("Cat") || other.CompareTag("Player") && !onlyCat)
@@ -49,7 +49,7 @@ public class PressurePlate : MonoBehaviour
             }
 
         }
-    }
+    }*/
 
     void DoorFunction(bool active)
     {
