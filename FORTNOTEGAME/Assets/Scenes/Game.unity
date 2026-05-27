@@ -45358,6 +45358,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1777998891}
     m_Modifications:
+    - target: {fileID: 1536283794550252841, guid: 459e341b0ef06b44685848b26fe013be, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c2912cf73cac59d49b305f786422b92a, type: 2}
     - target: {fileID: 3349959253464626507, guid: 459e341b0ef06b44685848b26fe013be, type: 3}
       propertyPath: m_Name
       value: PressurePlate (1)
@@ -54637,6 +54641,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1777998891}
     m_Modifications:
+    - target: {fileID: 1536283794550252841, guid: 459e341b0ef06b44685848b26fe013be, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c2912cf73cac59d49b305f786422b92a, type: 2}
     - target: {fileID: 3349959253464626507, guid: 459e341b0ef06b44685848b26fe013be, type: 3}
       propertyPath: m_Name
       value: PressurePlate
