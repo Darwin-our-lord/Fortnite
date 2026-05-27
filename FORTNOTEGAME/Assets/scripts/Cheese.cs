@@ -4,7 +4,10 @@ using UnityEngine;
 public class Cheese : MonoBehaviour
 {
     public static bool gotCheese = false;
-
+    public void Awake()
+    {
+        gotCheese = false;
+    }
     public void OnCollisionEnter(Collision collision)
     {
 
